@@ -21,7 +21,7 @@ git clone https://github.com/shian/htps.git
 ### 安裝相依套件
 
 ```sh
-npm install -g bower polymer-cli && npm install && bower install
+npm install -g bower polymer-cli && npm install && bower install
 ```
 
 ### 啟動開發用伺服器
