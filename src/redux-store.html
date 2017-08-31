@@ -1,0 +1,43 @@
+<link rel="import" href="../bower_components/polymer-redux/polymer-redux.html">
+
+<script>
+    const initialState = {
+        classArray: []
+    };
+
+    const reducer = (state, action) => {
+        if (!state) return initialState;
+
+        switch (action.type) {
+            case 'ADD_CLASS':
+                console.log(action);
+                if (state.classArray.indexOf(action.value)!=-1) {
+                    return state;
+                }
+                let c = state.classArray.slice();
+                c.push(action.value);
+                c.sort();
+
+                return Object.assign({}, state, {
+                    classArray: c
+                });
+
+            default:
+                return state;
+        }
+    }
+
+    const composeEnhancers =
+        typeof window === 'object' &&
+            window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?
+            window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+                // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+            }) : Redux.compose;
+
+    const enhancer = composeEnhancers(ReduxPersist.autoRehydrate());
+
+    const store = Redux.createStore(reducer, initialState, enhancer);
+    ReduxPersist.persistStore(store);
+    const ReduxMixin = PolymerRedux(store);
+
+</script>

@@ -14,24 +14,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="my-view2">
   <template>
     <style include="shared-styles">
-      :host {
+       :host {
         display: block;
+      }
 
-        padding: 10px;
+      iframe {
+        width: 100%;
+        height: 80vh;
       }
     </style>
 
-    <div class="card">
-      <div class="circle">2</div>
-      <h1>View Two</h1>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.</p>
-      <p>Id nam odio natum malorum, tibique copiosae expetenda mel ea.Detracto suavitate repudiandae no eum. Id adhuc minim soluta nam.Id nam odio natum malorum, tibique copiosae expetenda mel ea.</p>
-    </div>
+    <iframe id="homeworkFrame" name="contentFrame" frameborder="0" seamless></iframe>
   </template>
 
   <script>
     class MyView2 extends Polymer.Element {
       static get is() { return 'my-view2'; }
+
+      static get properties() {
+        return {
+          classNo: {
+            type: Number,
+            reflectToAttribute: true,
+            observer: '_pathChanged',
+          }
+        };
+      }
+
+      _pathChanged () {
+        var gradeName = Math.floor(this.classNo / 100);
+        var className = this.classNo % 100;
+        var d = new Date();
+
+        var gradeConst = ['%A4@', '%A4G', '%A4T', '%A5%7C', '%A4%AD', '%A4%BB'];
+        this.$.homeworkFrame.src =
+          'http://www.htps.tp.edu.tw/HomeBook.asp?GradeName=' + gradeConst[gradeName - 1] +
+          '&ClassName=' + className + '&Account=t00001&EventDate=' +
+          d.getFullYear() + '/' + (d.getMonth() + 1) + '/' + d.getDate();
+      }
     }
 
     window.customElements.define(MyView2.is, MyView2);

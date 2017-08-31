@@ -16,8 +16,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style include="shared-styles">
        :host {
         display: block;
-
-        padding: 10px;
       }
 
       iframe {
@@ -26,12 +24,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
 
-    <iframe src="http://www.htps.tp.edu.tw/bulletin.asp?BType=%A4%40%AF%EB%B0T%AE%A7" seamless></iframe>
+    <iframe frameborder="0" src="http://www.htps.tp.edu.tw/bulletin.asp?BType=%A4%40%AF%EB%B0T%AE%A7" seamless></iframe>
   </template>
 
   <script>
     class MyView1 extends Polymer.Element {
       static get is() { return 'my-view1'; }
+
+
+      
     }
 
     window.customElements.define(MyView1.is, MyView1);

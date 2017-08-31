@@ -9,29 +9,71 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer-element.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="shared-styles.html">
 
+<link rel="import" href="redux-store.html">
 <dom-module id="my-view3">
   <template>
     <style include="shared-styles">
-      :host {
+       :host {
         display: block;
 
         padding: 10px;
       }
+
+      .card {
+        width: 200px;
+        margin: auto;
+      }
+
+      paper-listbox {
+        width: 150px;
+      }
     </style>
 
     <div class="card">
-      <div class="circle">3</div>
-      <h1>View Three</h1>
-      <p>Modus commodo minimum eum te, vero utinam assueverit per eu.</p>
-      <p>Ea duis bonorum nec, falli paulo aliquid ei eum.Has at minim mucius aliquam, est id tempor laoreet.Pro saepe pertinax ei, ad pri animal labores suscipiantur.</p>
+      <paper-dropdown-menu id="d1" name="年級" label="年級" required>
+        <paper-listbox slot="dropdown-content">
+          <paper-item>1</paper-item>
+          <paper-item>2</paper-item>
+          <paper-item>3</paper-item>
+          <paper-item>4</paper-item>
+          <paper-item>5</paper-item>
+          <paper-item>6</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+
+      <paper-dropdown-menu id="d2" name="班級" label="班級" required>
+        <paper-listbox slot="dropdown-content">
+          <paper-item>1</paper-item>
+          <paper-item>2</paper-item>
+          <paper-item>3</paper-item>
+          <paper-item>4</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+      <paper-button on-tap="addNewClassNo">新增</paper-button>
     </div>
   </template>
 
   <script>
-    class MyView3 extends Polymer.Element {
+    class MyView3 extends ReduxMixin(Polymer.Element) {
       static get is() { return 'my-view3'; }
+
+      addNewClassNo(e) {
+        console.log(e);
+        if (this.$.d1.validate() && this.$.d2.validate()) {
+          let a = parseInt(this.$.d1.value);
+          let b = parseInt(this.$.d2.value);
+          this.dispatch({
+            type: 'ADD_CLASS',
+            value: a * 100 + b
+          });
+        }
+      }
     }
 
     window.customElements.define(MyView3.is, MyView3);
